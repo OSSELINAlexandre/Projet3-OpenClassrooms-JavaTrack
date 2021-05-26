@@ -14,16 +14,24 @@ public class FareCalculatorService {
 		long inHour = ticket.getInTime().getTime();
 		long outHour = ticket.getOutTime().getTime();
 
-		double duration = (outHour - inHour) / (1000.0 * 60.0); // Transforming to minutes
-		duration /=  60.00; // Transforming to hours
+		double duration = (outHour - inHour) / (1000.0 * 60.0 * 60.0); // Transforming to minutes
+//		duration /= 60.00; // Transforming to hours
 
 		switch (ticket.getParkingSpot().getParkingType()) {
 		case CAR: {
-			ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
+			if (duration > 0.5) {
+				ticket.setPrice(duration * Fare.CAR_RATE_PER_HOUR);
+			} else {
+				ticket.setPrice(0);
+			}
 			break;
 		}
 		case BIKE: {
-			ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
+			if (duration > 0.5) {
+				ticket.setPrice(duration * Fare.BIKE_RATE_PER_HOUR);
+			} else {
+				ticket.setPrice(0);
+			}
 			break;
 		}
 		default:

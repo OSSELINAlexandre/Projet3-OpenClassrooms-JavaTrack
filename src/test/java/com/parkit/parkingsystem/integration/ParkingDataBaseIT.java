@@ -68,9 +68,10 @@ public class ParkingDataBaseIT {
 		// TODO: check that a ticket is actualy saved in DB and Parking table is updated
 		// with availability
 	}
+	
 
 	
-	//These tests arent independant. 
+	//These tests aren't independant. 
 	@Test
 	public void testParkingLotExit() {
 		ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
