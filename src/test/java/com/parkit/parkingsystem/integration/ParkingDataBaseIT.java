@@ -115,7 +115,7 @@ public class ParkingDataBaseIT {
 
 		System.out.println("Debut : " + priceA + " || End : " + priceB);
 		assertNotEquals(priceB, priceA);
-		assertSame(priceB * 0.95 , priceA);
+		assertTrue((priceB * 0.95 == priceA));
 
 	}
 
