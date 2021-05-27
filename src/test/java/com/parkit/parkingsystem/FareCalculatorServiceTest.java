@@ -133,8 +133,8 @@ public class FareCalculatorServiceTest {
 	@Test
 	public void calculateFareCarWithLessThan30MinutesParkingTimeShouldBeFree() {
 		Date inTime = new Date();
-		inTime.setTime(System.currentTimeMillis() - (29 * 60 * 1000));// 24 hours parking time should give 24 * parking
-																		// fare per hour
+		inTime.setTime(System.currentTimeMillis() - (30 * 60 * 1000) + 1000); // 29 minutes and 59 seconds is free
+
 		Date outTime = new Date();
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 		ticket.setInTime(inTime);
@@ -147,8 +147,9 @@ public class FareCalculatorServiceTest {
 	@Test
 	public void calculateFareCarWithMoreThan30MinutesParkingTimeShouldBeChargeable() {
 		Date inTime = new Date();
-		inTime.setTime(System.currentTimeMillis() - (30 * 60 * 1000) - (1000));// 24 hours parking time should give 24 *
-																				// parking fare per hour
+		inTime.setTime(System.currentTimeMillis() - (30 * 60 * 1000) - (1000));// the first second at 30 minutes (1801
+																				// sec) is charged
+
 		Date outTime = new Date();
 		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
 		ticket.setInTime(inTime);
@@ -156,6 +157,21 @@ public class FareCalculatorServiceTest {
 		ticket.setParkingSpot(parkingSpot);
 		fareCalculatorService.calculateFare(ticket);
 		Double priceRatio = 1801.0 / 3600.0;
+		assertEquals((priceRatio * Fare.CAR_RATE_PER_HOUR), ticket.getPrice());
+	}
+
+	@Test
+	public void calculateFareCarWithExactly30MinutesParkingTimeShouldBeChargeable() {
+		Date inTime = new Date();
+		inTime.setTime(System.currentTimeMillis() - (30 * 60 * 1000));// 30 minutes exactly (1800 sec)is charged
+
+		Date outTime = new Date();
+		ParkingSpot parkingSpot = new ParkingSpot(1, ParkingType.CAR, false);
+		ticket.setInTime(inTime);
+		ticket.setOutTime(outTime);
+		ticket.setParkingSpot(parkingSpot);
+		fareCalculatorService.calculateFare(ticket);
+		Double priceRatio = 1800.0 / 3600.0;
 		assertEquals((priceRatio * Fare.CAR_RATE_PER_HOUR), ticket.getPrice());
 	}
 
