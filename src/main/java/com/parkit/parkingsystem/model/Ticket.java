@@ -3,6 +3,28 @@ package com.parkit.parkingsystem.model;
 import java.util.Calendar;
 import java.util.Date;
 
+
+/**
+ * <b>Ticket est la classe modèle pour représenter les tickets de parking </b>
+ * <p>
+ * Une place de parking se représente avec :
+ * <ul>
+ * <li>Un numéro d'identification de ticket</li>
+ * <li>Un parking associé</li>
+ * <li>Un numéro d'immatriculation</li>
+ * <li>Un prix</li>
+ * <li>Une date d'entrée</li>
+ * <li>Une date de sortie</li>
+ * </ul>
+ * </p>
+ * 
+ * @see ParkingSpot
+ * 
+ * @author Alexandre OSSELIN
+ * @version 1.0
+ */
+
+
 public class Ticket {
     private int id;
     private ParkingSpot parkingSpot;

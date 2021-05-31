@@ -89,7 +89,7 @@ public class ParkingDataBaseIT {
 		parkingService.processExitingVehicle();
 
 		assertTrue(ticketDAO.getTicket("ABCDEF").getOutTime() != null);
-		assertNotEquals(ticketDAO.getTicket("ABCDEF").getPrice(), 0);
+		assertEquals(ticketDAO.getTicket("ABCDEF").getPrice(), 0);
 		// TODO: check that the fare generated and out time are populated correctly in
 		// the database
 	}
@@ -111,6 +111,7 @@ public class ParkingDataBaseIT {
 
 		parkingService.processExitingVehicle(ended + (1000 * 60 * 47));
 
+		
 		Double priceA = ticketDAO.getTicket("ABCDEF").getPrice();
 
 		System.out.println("Debut : " + priceA + " || End : " + priceB);

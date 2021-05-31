@@ -6,47 +6,65 @@ import com.parkit.parkingsystem.util.InputReaderUtil;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * <b>Interface utilisateur sous forme de ligne de commande</b>
+ * <p>
+ * InteractiveShell fait le lien entre le client et le service. InteractiveShell
+ * permet une première allocation du service en fonction des besoins du client.
+ * </p>
+ * <p>
+ * La classe instancie également toutes les classes nécessaires au service
+ * ParkingService. En particulier le DAO Parking et Ticket.
+ * </p>
+ * 
+ * @see parkingService
+ * 
+ * @author Alexandre OSSELIN
+ * @version 1.0
+ */
+
 public class InteractiveShell {
 
     private static final Logger logger = LogManager.getLogger("InteractiveShell");
 
-    public static void loadInterface(){
-        logger.info("App initialized!!!");
-        System.out.println("Welcome to Parking System!");
+    public static void loadInterface() {
+	logger.info("App initialized!!!");
+	System.out.println("Welcome to Parking System!");
 
-        boolean continueApp = true;
-        InputReaderUtil inputReaderUtil = new InputReaderUtil();
-        ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
-        TicketDAO ticketDAO = new TicketDAO();
-        ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
+	boolean continueApp = true;
+	InputReaderUtil inputReaderUtil = new InputReaderUtil();
+	ParkingSpotDAO parkingSpotDAO = new ParkingSpotDAO();
+	TicketDAO ticketDAO = new TicketDAO();
+	ParkingService parkingService = new ParkingService(inputReaderUtil, parkingSpotDAO, ticketDAO);
 
-        while(continueApp){
-            loadMenu();
-            int option = inputReaderUtil.readSelection();
-            switch(option){
-                case 1: {
-                    parkingService.processIncomingVehicle();
-                    break;
-                }
-                case 2: {
-                    parkingService.processExitingVehicle();
-                    break;
-                }
-                case 3: {
-                    System.out.println("Exiting from the system!");
-                    continueApp = false;
-                    break;
-                }
-                default: System.out.println("Unsupported option. Please enter a number corresponding to the provided menu");
-            }
-        }
+	while (continueApp) {
+	    loadMenu();
+	    int option = inputReaderUtil.readSelection();
+	    switch (option) {
+	    case 1: {
+		parkingService.processIncomingVehicle();
+		break;
+	    }
+	    case 2: {
+		parkingService.processExitingVehicle();
+		break;
+	    }
+	    case 3: {
+		System.out.println("Exiting from the system!");
+		continueApp = false;
+		break;
+	    }
+	    default:
+		System.out.println("Unsupported option. Please enter a number corresponding to the provided menu");
+	    }
+	}
     }
 
-    private static void loadMenu(){
-        System.out.println("Please select an option. Simply enter the number to choose an action");
-        System.out.println("1 New Vehicle Entering - Allocate Parking Space");
-        System.out.println("2 Vehicle Exiting - Generate Ticket Price");
-        System.out.println("3 Shutdown System");
+    private static void loadMenu() {
+	System.out.println("Please select an option. Simply enter the number to choose an action");
+	System.out.println("1 New Vehicle Entering - Allocate Parking Space");
+	System.out.println("2 Vehicle Exiting - Generate Ticket Price");
+	System.out.println("3 Shutdown System");
     }
 
 }
